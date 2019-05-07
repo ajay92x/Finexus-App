@@ -76,7 +76,7 @@ export default class App extends React.Component{
     return (
       <div style={{textAlign: 'center'}}>
 
-        {this.state.isResend ? <label>Your OTP is expired.</label>:<label>Your OTP is expiring in <span style={{fontWeight: 'bold'}}>{this.state.minutes}:{this.state.seconds}</span></label>}
+        {this.state.isResend ? <label>Your OTP has expired.</label>:<label>Your OTP is expiring in <span style={{fontWeight: 'bold'}}>{this.state.minutes}:{this.state.seconds}</span></label>}
         
         <br />
         <button disabled={this.state.minutes>=3} onClick={this.countdown}>Resend OTP</button>
