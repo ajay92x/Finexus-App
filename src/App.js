@@ -58,7 +58,7 @@ export default class App extends React.Component{
   }
 
   /**
-   * Reset timer.
+   * Start/Reset timer.
    */
   countdownFn() {
     
