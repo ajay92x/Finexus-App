@@ -4,10 +4,10 @@ export default class App extends React.Component{
   constructor(props){
     super(props)
     this.state={
+      startTimer:"05",
       seconds: "00",
       minutes: "05",  // initial 5 minutes
-      isResend: false, // is otp resend button clicked
-      isMainTimerUsed: false  // check 5 minutes countdown is used
+      isResend: false // is otp resend button clicked
     }
     this.secondsLeft = ""; 
     this.counterInterval = "";
@@ -50,32 +50,36 @@ export default class App extends React.Component{
         ...this.state,isResend:true
       })
 
-      clearInterval(this.counterInterval);
+      clearInterval(this.counterInterval);  // clear timer when the timer is up.
       
-      this.setState({
-        ...this.state,isMainTimerUsed:true
-      })
-
     }
 
     this.secondsLeft--
   }
 
   /**
-   * 
+   * Reset timer.
    */
   countdownFn() {
-    let time = this.state.isMainTimerUsed?"03":this.state.minutes;
+    
+    if(this.counterInterval){
+      clearInterval(this.counterInterval)   // clear timer if it already in progress.
+    }
+
+    let time = this.state.startTimer;
     this.secondsLeft = time * 60;
+    
     this.counterInterval = setInterval(this.counter, 1000);
   }
 
   render(){
     return (
       <div style={{textAlign: 'center'}}>
-        <label>Your OTP is expiring in <span style={{fontWeight: 'bold'}}>{this.state.minutes}:{this.state.seconds}</span></label>
+
+        {this.state.isResend ? <label>Your OTP is expired.</label>:<label>Your OTP is expiring in <span style={{fontWeight: 'bold'}}>{this.state.minutes}:{this.state.seconds}</span></label>}
+        
         <br />
-        <button disabled={!this.state.isResend} onClick={this.countdown}>Resend OTP</button>
+        <button disabled={this.state.minutes>=3} onClick={this.countdown}>Resend OTP</button>
       </div>
     )
   }
